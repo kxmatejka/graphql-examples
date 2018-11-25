@@ -2,12 +2,12 @@ const GITHUB_API = 'https://api.github.com/graphql'
 const GITHUB_KEY = '4f345abf8189735e4966e8f594b9fee747cd7f62'
 
 const QUERY = `
-  query {
+  query ($first:Int) {
     viewer {
       name
       company
       avatarUrl (size: 150)
-      repositories (first: 10) {
+      repositories (first: $first) {
         nodes {
           name
           url
@@ -22,11 +22,15 @@ async function send (query) {
   const response = await fetch(GITHUB_API, {
     method: 'POST',
     headers: {
-      'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${GITHUB_KEY}`
     },
-    body: JSON.stringify({query})
+    body: JSON.stringify({
+      query: query,
+      variables: {
+        first: 10
+      }
+    })
   })
 
   return await response.json()
@@ -37,12 +41,12 @@ async function render () {
   const result = await send(QUERY)
   const data = result.data.viewer
 
-  const container = document.getElementById('app')
+  const app = document.getElementById('app')
 
-  container.appendChild(Name(data.name))
-  container.appendChild(Avatar(data.avatarUrl))
-  container.appendChild(Company(data.company))
-  container.appendChild(Repositories(data.repositories.nodes))
+  app.appendChild(Name(data.name))
+  app.appendChild(Avatar(data.avatarUrl))
+  app.appendChild(Company(data.company))
+  app.appendChild(Repositories(data.repositories.nodes))
 }
 
 
