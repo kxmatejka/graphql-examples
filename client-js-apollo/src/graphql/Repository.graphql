@@ -1,0 +1,9 @@
+fragment RepositoryPreviewFragment on Repository {
+    id
+    url
+    name
+    description
+    owner {
+        login
+    }
+}

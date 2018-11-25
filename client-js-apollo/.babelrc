@@ -1,0 +1,20 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "debug": false,
+        "modules": false,
+        "useBuiltIns": false,
+        "forceAllTransforms": false,
+        "loose": true
+      }
+    ],
+    "@babel/preset-react",
+    "@babel/preset-flow"
+  ],
+  "plugins": [
+    "babel-plugin-styled-components",
+    "babel-plugin-transform-class-properties"
+  ]
+}

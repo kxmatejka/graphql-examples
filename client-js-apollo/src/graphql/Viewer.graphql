@@ -1,0 +1,16 @@
+#import "./RepositoryPreviewFragment.graphql"
+
+query Viewer {
+    viewer {
+        name
+        login
+        company
+        avatarUrl (size: 150)
+        repositories (first: 10) {
+            nodes {
+                ...RepositoryPreviewFragment
+            }
+            totalCount
+        }
+    }
+}
